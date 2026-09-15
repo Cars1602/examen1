@@ -1,23 +1,22 @@
-//CREAMOS LA CONEXION A LA BASE DE DATOS
-const {Sequelize} = require('sequelize');
-
 require('dotenv').config();
+const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
-        dialect: 'mssql',
-        dialectOptions: {
-            options: {
-                encrypt: true,
-                trustServerCertificate: true
-            }
-        },
-        logging: false
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST || 'localhost',
+    dialect: 'mssql',
+    port: parseInt(process.env.DB_PORT, 10) || 1433,
+    logging: false,
+    dialectOptions: {
+      options: {
+        encrypt: false,
+        trustServerCertificate: true
+      }
     }
+  }
 );
+
 module.exports = sequelize;

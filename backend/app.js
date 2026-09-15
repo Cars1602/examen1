@@ -1,31 +1,39 @@
 const express = require('express');
-const sequelize = require('./config/database');
 const app = express();
-const Producto = require('./models/Producto');//Importamos el modelo Producto
+
+const sequelize = require('./config/database');
+const Producto = require('./models/Producto');
 const productoRoutes = require('./routes/productoRoutes');
+
+// Middlewares
 app.use(express.json());
+
+// Rutas
 app.use('/api', productoRoutes);
 
 app.get('/', (req, res) => {
     res.send('¡Bienvenido a la API de Productos!');
 });
-sequelize
-    .authenticate()
-    .then(() => {
-        console.log(
-            'Conexión a la base de datos establecida correctamente.');
-    })
-    .catch((error) => {
-        console.error(
-            'Error al conectar a la base de datos:', error);
-    });
-app.listen(3000, () => {
-    console.log('Servidor ejecutándose en http://localhost:3000');
-});
-sequelize.sync()
-    .then(() => {
+
+const PORT = process.env.PORT || 3000;
+
+// Inicialización controlada
+async function iniciarServidor() {
+    try {
+        await sequelize.authenticate();
+        console.log('Conexión a la base de datos establecida correctamente.');
+
+        // Sincroniza la tabla en SQL Server si no existe
+        await sequelize.sync();
         console.log('Base de datos sincronizada correctamente.');
-    })
-    .catch((error) => {
-        console.error('Error al sincronizar la base de datos:', error);
-    });
+
+        app.listen(PORT, () => {
+            console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error('Error al inicializar la aplicación:', error.message);
+        process.exit(1);
+    }
+}
+
+iniciarServidor();
