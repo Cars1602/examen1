@@ -1,8 +1,10 @@
 // Crear el modelo de productos
-
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+<<<<<<< HEAD
 
+=======
+>>>>>>> cdea2fb (actualizacion producto controllers)
 
 const Producto = sequelize.define('Producto', {
     id: {
@@ -15,20 +17,29 @@ const Producto = sequelize.define('Producto', {
         allowNull: false
     },
     descripcion: {
-        type: DataTypes.STRING(255) //NVARCHAR / VARCHAR (250)
+        type: DataTypes.STRING(255)
     },
     precio: {
-        type: DataTypes.DECIMAL(10, 2), //DECIMAL
-        allowNull: false
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+        validate: {
+            min: 0.01 // Precio mayor a 0
+        }
     },
     stock: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            min: 0 // Stock no negativo
+        }
+    },
+    estado: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
-},
-{
+}, {
     tableName: 'productos',
-}
-);
+});
 
 module.exports = Producto;

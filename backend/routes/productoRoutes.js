@@ -1,23 +1,26 @@
 const express = require('express');
 const router = express.Router();
 
-// Importamos todas las funciones del controlador
 const { 
     listarProductos, 
+    buscarProducto,
+    obtenerProductoPorId,
     crearProducto, 
     actualizarProducto, 
     eliminarProducto 
 } = require('../controllers/productoController');
 
+<<<<<<< HEAD
+=======
+// IMPORTANTE: La ruta de búsqueda debe definirse ANTES que la de /:id 
+// para evitar que la palabra "buscar" se interprete como un ID.
+router.get('/productos/buscar', buscarProducto);
+
+>>>>>>> cdea2fb (actualizacion producto controllers)
 router.get('/productos', listarProductos);
-
-// 2. CREATE (POST) -> Guardar nuevo producto
+router.get('/productos/:id', obtenerProductoPorId);
 router.post('/productos', crearProducto);
-
-// 3. UPDATE (PUT) -> Editar un producto por su ID
 router.put('/productos/:id', actualizarProducto);
-
-// 4. DELETE (DELETE) -> Borrar un producto por su ID
 router.delete('/productos/:id', eliminarProducto);
 
 module.exports = router;
