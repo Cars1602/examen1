@@ -1,8 +1,8 @@
 const express = require('express');
-const sequelize = require('./config/database');
+const sequelize = require('./backend/config/database');
 const app = express();
-const Producto = require('./models/Producto');//Importamos el modelo Producto
-const productoRoutes = require('./routes/productoRoutes');
+const Producto = require('./backend/models/Producto');//Importamos el modelo Producto
+const productoRoutes = require('./backend/routes/productoRoutes');
 app.use(express.json());
 app.use('/api', productoRoutes);
 

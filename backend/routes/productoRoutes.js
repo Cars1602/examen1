@@ -9,7 +9,6 @@ const {
     eliminarProducto 
 } = require('../controllers/productoController');
 
-// 1. READ (GET) -> Ver productos
 router.get('/productos', listarProductos);
 
 // 2. CREATE (POST) -> Guardar nuevo producto
